@@ -1,11 +1,14 @@
 import React from 'react';
-import Dispositivos from './pages';
+import Dispositivos from './pages/Dispositivos';
+import GlobalStyles from './styles/global';
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <GlobalStyles/>
       <Dispositivos/>
-    </div>
+    </>
+
   );
 }
 
