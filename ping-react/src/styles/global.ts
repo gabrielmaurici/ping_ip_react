@@ -7,7 +7,7 @@ export default createGlobalStyle`
     outline: 0;
     box-sizing: border-box;
 
-    color: #FFFF;
+    font-family: 'Poppins', sans-serif;
   }
 
   body {
