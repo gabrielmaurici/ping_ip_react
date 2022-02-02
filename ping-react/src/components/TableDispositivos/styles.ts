@@ -14,17 +14,13 @@ export const DispositivosContent = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height: 70%;
-    width: 85%;
+    height: 80%;
+    width: 90%;
 
     gap: 0 10%;
         
     li { 
         list-style-type: none;
-    }
-    
-    img {
-        height: 90px;
     }
     
     .disp-onlines, .disp-offlines {
@@ -34,26 +30,26 @@ export const DispositivosContent = styled.div`
         text-align: center;
         
         height: 30%;
-        width: 15%;
+        width: 17%;
 
-        
+        padding: 5px;
 
         border-radius: 5px;
+
+        p {
+            margin-top: 10px;
+
+            font-weight: 200;
+
+            color: #FFF;
+        }
     }
     
     .disp-onlines {
         border: 1px solid #1fbe0e;
-
-        p { 
-            color: #fff;
-        }
     }
 
     .disp-offlines {
         border: 1px solid #eb3728;
-
-        p { 
-            color: #FFF;
-        }
     }
 `;

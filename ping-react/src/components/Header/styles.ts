@@ -1,18 +1,24 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+    height: 100vh;
+    width: 35%;
+
+    background: #22272E;
+`
+
+export const HeaderDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    height: 100vh;
-    width: 25%;
+    height: 100%;
 
-    background: #2D333B;
+    background: #22272E;
 
     h1 { 
-        font-size: 65px;
+        font-size: 400%;
         font-weight: 200;
         color: #FFFFFF;
     }
@@ -21,14 +27,17 @@ export const Container = styled.div`
         font-weight: 200;
         color: #FFFFFF;
     }
-`
+`;
 
 export const ConexaoImg = styled.div`
-    height: 350px;
-    margin: 100px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    img { 
-        height: 340px;
+    margin: 13% 0;
+
+    img {
+        height: 200px;
     }
 `
 
@@ -37,6 +46,10 @@ export const StatusDispositivos = styled.div`
 
     margin-top: 20px;
     gap: 40px;
+
+    p {
+        font-weight: 200;
+    }
 
     .disp-onlines {
         text-align: center;
