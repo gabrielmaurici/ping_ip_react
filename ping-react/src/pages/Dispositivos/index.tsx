@@ -1,14 +1,15 @@
-import React from 'react';
-
 import Header from '../../components/Header';
 import TableDispositivos from '../../components/TableDispositivos';
+import { DispositivosProvider } from '../../hooks/useDispositivos';
 import { Container } from './styles';
 
 const Dispositivos = (): JSX.Element => {
     return(
         <Container>
-            <Header/>
-            <TableDispositivos/>
+            <DispositivosProvider>
+                <Header/>
+                <TableDispositivos/>
+            </DispositivosProvider>
         </Container>
     )
 }

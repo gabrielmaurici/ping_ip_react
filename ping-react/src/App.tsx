@@ -1,4 +1,4 @@
-import React from 'react';
+import { DispositivosProvider } from './hooks/useDispositivos';
 import Dispositivos from './pages/Dispositivos';
 import GlobalStyles from './styles/global';
 
