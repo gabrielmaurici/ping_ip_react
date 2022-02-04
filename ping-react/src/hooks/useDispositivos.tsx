@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 import { apiDispositivos } from '../services/apiDispositivos';
 import { apiToken } from '../services/apiToken';
-import { toast } from 'react-toastify';
 import { Dispositivo } from '../types'
 
 interface DispositivosProviderProps {
@@ -30,7 +30,7 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
 
             return token.data['token'];
         } catch (error: any) {
-            toast.error(error.response.data['mensagem']);
+            toast.error(error.response.data);
         }
     }
     
@@ -41,18 +41,21 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
 
         return tokenBearer;
     }
-    
+
     const buscaStatusDispositivos = async () => {
         try {            
             const token = await capturaToken();
-            console.log('Token' + token);
-
-            const tokenBearer = criaTokenBearer(token);
-            console.log('Bearer' + tokenBearer);
-
-            const statusDispositivos = await apiDispositivos.get<Dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
             
+            const tokenBearer = criaTokenBearer(token);
+            
+            
+            toast.success('Atualizando status'); 
+            const statusDispositivos = await apiDispositivos.get<Dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
             setDispositivos(statusDispositivos.data);
+
+            if(statusDispositivos.data) {                
+                setTimeout(buscaStatusDispositivos, 30000);
+            }
         } catch (error: any) {
             toast.error(error.response.data);
         }

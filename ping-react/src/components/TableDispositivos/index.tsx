@@ -14,11 +14,9 @@ const TableDispositivos = (): JSX.Element => {
         buscaStatusDispositivos();
     }, [])
 
-    setInterval(buscaStatusDispositivos, 40000);
     return(
         <Container>
             <DispositivosContent>
-
                 {
                     dispositivos.map((dispositivo: any) => 
                         <div key={dispositivo.id}  className={ dispositivo.status === true ? "disp-onlines" : "disp-offlines"}>

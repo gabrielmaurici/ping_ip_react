@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import Header from '../../components/Header';
 import TableDispositivos from '../../components/TableDispositivos';
 import { DispositivosProvider } from '../../hooks/useDispositivos';
@@ -9,6 +10,7 @@ const Dispositivos = (): JSX.Element => {
             <DispositivosProvider>
                 <Header/>
                 <TableDispositivos/>
+                <ToastContainer autoClose={5000}/>
             </DispositivosProvider>
         </Container>
     )
