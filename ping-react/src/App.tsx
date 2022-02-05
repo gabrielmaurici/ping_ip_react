@@ -1,12 +1,12 @@
 import { DispositivosProvider } from './hooks/useDispositivos';
-import Dispositivos from './pages/Dispositivos';
+import Home from '../src/pages/Home'
 import GlobalStyles from './styles/global';
 
 function App() {
   return (
     <>
       <GlobalStyles/>
-      <Dispositivos/>
+      <Home/>
     </>
 
   );

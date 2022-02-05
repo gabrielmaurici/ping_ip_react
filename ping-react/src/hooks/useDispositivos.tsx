@@ -54,7 +54,7 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
             setDispositivos(statusDispositivos.data);
 
             if(statusDispositivos.data) {                
-                setTimeout(buscaStatusDispositivos, 30000);
+                // setTimeout(buscaStatusDispositivos, 30000);
             }
         } catch (error: any) {
             toast.error(error.response.data);

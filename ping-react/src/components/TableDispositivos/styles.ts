@@ -2,11 +2,43 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
 
     height: 100vh;
     width: 100vw;
+`;
+
+export const ButtonAddDispositivo = styled.div`
+    display: flex;
+    justify-content: end;
+    margin: 2% 0 0;
+
+    width: 90%;
+
+    button { 
+        display: flex;
+        gap: 7px;
+
+        justify-content: center;
+        align-items: center;
+
+        height: 55px;
+        width: 230px;
+
+        border-radius: 5px;
+        border-style: none;
+
+        font-size: 17px;
+
+        background: #8257E6;
+        color: #FFF;
+    }
+
+    button:hover { 
+        filter: brightness(1.2);
+        transition: all 0.7s;
+    }
 `;
 
 export const DispositivosContent = styled.div`
@@ -37,7 +69,7 @@ export const DispositivosContent = styled.div`
         border-radius: 5px;
 
         p {
-            margin-top: 10px;
+            margin-top: 5px;
 
             font-weight: 200;
 

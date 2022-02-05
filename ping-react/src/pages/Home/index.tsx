@@ -4,7 +4,7 @@ import TableDispositivos from '../../components/TableDispositivos';
 import { DispositivosProvider } from '../../hooks/useDispositivos';
 import { Container } from './styles';
 
-const Dispositivos = (): JSX.Element => {
+const Home = (): JSX.Element => {
     return(
         <Container>
             <DispositivosProvider>
@@ -16,4 +16,4 @@ const Dispositivos = (): JSX.Element => {
     )
 }
 
-export default Dispositivos;
+export default Home;

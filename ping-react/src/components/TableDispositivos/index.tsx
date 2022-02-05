@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
-import { Container, DispositivosContent } from './styles'
+import { useEffect, useState } from 'react';
+import { ButtonAddDispositivo, Container, DispositivosContent } from './styles'
 import { SiAmazonalexa, SiAmazonfiretv } from 'react-icons/si';
 import { MdOutlinePhoneIphone, MdLightbulbOutline } from 'react-icons/md';
 import { RiRemoteControlLine } from 'react-icons/ri';
 import { HiOutlineDesktopComputer } from 'react-icons/hi';
+import { AiFillPlusCircle } from 'react-icons/ai';
 import { useDispositivos } from '../../hooks/useDispositivos';
 
 const TableDispositivos = (): JSX.Element => {
 
     const { dispositivos, buscaStatusDispositivos } = useDispositivos();
+    const [modalAddDispositivo, setModalAddDispositivo] = useState(true);
     
     useEffect(() => {
         buscaStatusDispositivos();
@@ -16,6 +18,11 @@ const TableDispositivos = (): JSX.Element => {
 
     return(
         <Container>
+            <ButtonAddDispositivo>
+                <button onClick={() => setModalAddDispositivo(false)}>
+                    Novo dispositivo <AiFillPlusCircle size="23px" color="white" />
+                </button>
+            </ButtonAddDispositivo>
             <DispositivosContent>
                 {
                     dispositivos.map((dispositivo: any) => 
@@ -25,14 +32,14 @@ const TableDispositivos = (): JSX.Element => {
                                         if (dispositivo.tipoDispositivo === 'SmartHome') {
                                             return (
                                                 <>
-                                                    <SiAmazonalexa size="40%" color="white" />
+                                                    <SiAmazonalexa size="35%" color="white" />
                                                     <p>{dispositivo.nome}</p>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'Computador') {
                                             return (
                                                 <>
-                                                    <HiOutlineDesktopComputer size="40%" color="white" /> 
+                                                    <HiOutlineDesktopComputer size="35%" color="white" /> 
                                                 
                                                     <p>{dispositivo.nome}</p>
                                                 </>
@@ -40,28 +47,28 @@ const TableDispositivos = (): JSX.Element => {
                                         } else if (dispositivo.tipoDispositivo === 'Celular') {
                                             return (
                                                 <>
-                                                    <MdOutlinePhoneIphone size="40%" color="white" /> 
+                                                    <MdOutlinePhoneIphone size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'Luz') {
                                             return (
                                                 <>
-                                                    <MdLightbulbOutline size="40%" color="white" /> 
+                                                    <MdLightbulbOutline size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'FireStickTv') {
                                             return (
                                                 <>
-                                                    <SiAmazonfiretv size="40%" color="white" /> 
+                                                    <SiAmazonfiretv size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'ControleSmart') {
                                             return (
                                                 <>
-                                                    <RiRemoteControlLine size="40%" color="white" /> 
+                                                    <RiRemoteControlLine size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
                                                 </>
                                             )
