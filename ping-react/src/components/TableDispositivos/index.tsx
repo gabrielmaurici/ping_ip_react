@@ -9,9 +9,8 @@ import { useDispositivos } from '../../hooks/useDispositivos';
 
 const TableDispositivos = (): JSX.Element => {
 
-    const { dispositivos, buscaStatusDispositivos } = useDispositivos();
-    const [modalAddDispositivo, setModalAddDispositivo] = useState(true);
-    
+    const { dispositivos, abreFechaModal, buscaStatusDispositivos } = useDispositivos();
+
     useEffect(() => {
         buscaStatusDispositivos();
     }, [])
@@ -19,7 +18,7 @@ const TableDispositivos = (): JSX.Element => {
     return(
         <Container>
             <ButtonAddDispositivo>
-                <button onClick={() => setModalAddDispositivo(false)}>
+                <button onClick={() => abreFechaModal(true)}>
                     Novo dispositivo <AiFillPlusCircle size="23px" color="white" />
                 </button>
             </ButtonAddDispositivo>

@@ -10,6 +10,8 @@ interface DispositivosProviderProps {
 
 interface DispositivosContextData { 
     dispositivos: Dispositivo[];
+    modalAddDispositivos: boolean;
+    abreFechaModal: (seta: boolean) => void;
     buscaStatusDispositivos: () => void;
 }
 
@@ -18,6 +20,7 @@ const DispositivosContext = createContext<DispositivosContextData>({} as Disposi
 export function DispositivosProvider({ children } : DispositivosProviderProps): JSX.Element {
 
     const [dispositivos, setDispositivos] = useState<Dispositivo[]>([]);
+    const [modalAddDispositivos, setModalAddDispositivos] = useState(false);
 
     const capturaToken = async () => {
         try {
@@ -34,7 +37,7 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
         }
     }
     
-    const criaTokenBearer  = (token: any) => {
+    const criaTokenBearer = (token: any) => {
         const tokenBearer = {
             headers: {"Authorization": "bearer " + token}
         };
@@ -61,9 +64,14 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
         }
     }    
 
+    const abreFechaModal = (seta: boolean) => {
+        setModalAddDispositivos(seta);
+    }
+
+    console.log(modalAddDispositivos);
     return (
         <DispositivosContext.Provider
-            value={{ dispositivos, buscaStatusDispositivos }}
+            value={{ dispositivos, modalAddDispositivos, abreFechaModal, buscaStatusDispositivos }}
         >
             {children}
         </DispositivosContext.Provider>

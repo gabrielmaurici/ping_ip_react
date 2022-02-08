@@ -36,7 +36,7 @@ export const ButtonAddDispositivo = styled.div`
     }
 
     button:hover { 
-        filter: brightness(1.2);
+        filter: brightness(1.3);
         transition: all 0.7s;
     }
 `;
