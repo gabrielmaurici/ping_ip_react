@@ -37,12 +37,16 @@ export const FormularioDisp = styled.form`
     justify-content: center;
     align-items: center;
 
+    width: 500px;
+
     gap: 1.5rem;
 
     .titulo {
         display: flex;
         align-items: center;
-        gap: 10px;
+        justify-content: space-between;
+
+        width: 100%;
 
         h3 {
             color: #FFF;
@@ -62,7 +66,7 @@ export const FormularioDisp = styled.form`
         }
     }
 
-    input { 
+    input, select { 
         height: 2.5rem;
         width: 100%;
 
@@ -87,6 +91,17 @@ export const FormularioDisp = styled.form`
         box-shadow: 0 0 5px 0 #8257E6;
     }
 
+    select::placeholder {
+        font-size: 16px;
+
+        color: #858585;
+    }
+
+    select:focus {
+        border: 1px solid #8257E6;
+        box-shadow: 0 0 5px 0 #8257E6;
+    }
+
     .btn-group {
         display: flex;
         justify-content: end;
@@ -96,7 +111,7 @@ export const FormularioDisp = styled.form`
 
         button {
             height: 40px;
-            width: 100px;
+            width: 140px;
         }
 
         button:hover { 

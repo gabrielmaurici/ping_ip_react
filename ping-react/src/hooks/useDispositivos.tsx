@@ -8,18 +8,21 @@ interface DispositivosProviderProps {
     children: ReactNode;
 }
 
+type dispositivo = Omit<Dispositivo, "ip">;
+type insereDispositivo = Omit<Dispositivo, "id status mensagem">
+
 interface DispositivosContextData { 
-    dispositivos: Dispositivo[];
+    dispositivos: dispositivo[];
     modalAddDispositivos: boolean;
     abreFechaModal: (seta: boolean) => void;
+    addDispositivo: (novoDispositivo: insereDispositivo) => Promise<void>;
     buscaStatusDispositivos: () => void;
 }
 
 const DispositivosContext = createContext<DispositivosContextData>({} as DispositivosContextData);
 
 export function DispositivosProvider({ children } : DispositivosProviderProps): JSX.Element {
-
-    const [dispositivos, setDispositivos] = useState<Dispositivo[]>([]);
+    const [dispositivos, setDispositivos] = useState<dispositivo[]>([]);
     const [modalAddDispositivos, setModalAddDispositivos] = useState(false);
 
     const capturaToken = async () => {
@@ -31,9 +34,16 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
             
             const token = await apiToken.post('/loginAuth', usuario);
 
-            return token.data['token'];
+            if(token.status === 400) {
+                toast.warning(token.data.mensagem);
+                return false;
+            }
+
+            return token.data.token;
         } catch (error: any) {
-            toast.error(error.response.data);
+            toast.error("Alconteceu algum erro inesperado.");
+
+            return false;
         }
     }
     
@@ -45,22 +55,44 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
         return tokenBearer;
     }
 
+    const addDispositivo = async (novoDispositivo: insereDispositivo) => {
+        try {
+            const token = await capturaToken();
+
+            if(token) {
+                const tokenBearer = criaTokenBearer(token);
+    
+                const retornoDispositivo = await apiDispositivos.post<dispositivo>('InserirDispositivo', novoDispositivo, tokenBearer);
+    
+                if(retornoDispositivo.status === 409){
+                    toast.warning(retornoDispositivo.data.mensagem);
+                } else{
+                    toast.success(retornoDispositivo.data.mensagem);
+                }
+            }
+        } catch (error: any) {
+            toast.error("Aconteceu algum erro inesperado.");
+        }
+    }
+
     const buscaStatusDispositivos = async () => {
         try {            
             const token = await capturaToken();
             
-            const tokenBearer = criaTokenBearer(token);
-            
-            
-            toast.success('Atualizando status'); 
-            const statusDispositivos = await apiDispositivos.get<Dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
-            setDispositivos(statusDispositivos.data);
-
-            if(statusDispositivos.data) {                
-                // setTimeout(buscaStatusDispositivos, 30000);
+            if(token) {
+                const tokenBearer = criaTokenBearer(token);
+                
+                toast.success('Atualizando status'); 
+                const statusDispositivos = await apiDispositivos.get<dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
+                setDispositivos(statusDispositivos.data);
+    
+                if(statusDispositivos.data) {      
+                    clearTimeout();          
+                    setTimeout(buscaStatusDispositivos, 30000);
+                }
             }
         } catch (error: any) {
-            toast.error(error.response.data);
+            toast.error("Aconteceu algum erro inesperado.");
         }
     }    
 
@@ -68,10 +100,9 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
         setModalAddDispositivos(seta);
     }
 
-    console.log(modalAddDispositivos);
     return (
         <DispositivosContext.Provider
-            value={{ dispositivos, modalAddDispositivos, abreFechaModal, buscaStatusDispositivos }}
+            value={{ dispositivos, modalAddDispositivos, abreFechaModal, addDispositivo, buscaStatusDispositivos }}
         >
             {children}
         </DispositivosContext.Provider>

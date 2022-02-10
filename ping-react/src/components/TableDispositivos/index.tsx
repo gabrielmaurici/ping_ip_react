@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ButtonAddDispositivo, Container, DispositivosContent } from './styles'
 import { SiAmazonalexa, SiAmazonfiretv } from 'react-icons/si';
 import { MdOutlinePhoneIphone, MdLightbulbOutline } from 'react-icons/md';
@@ -28,7 +28,7 @@ const TableDispositivos = (): JSX.Element => {
                         <div key={dispositivo.id}  className={ dispositivo.status === true ? "disp-onlines" : "disp-offlines"}>
                             <li>
                                 {(() => {
-                                        if (dispositivo.tipoDispositivo === 'SmartHome') {
+                                        if (dispositivo.tipoDispositivo === 'Alexa') {
                                             return (
                                                 <>
                                                     <SiAmazonalexa size="35%" color="white" />

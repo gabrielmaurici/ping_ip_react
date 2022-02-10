@@ -13,8 +13,8 @@ const Home = (): JSX.Element => {
                 <ModalAddDispositivo />
                 <Header/>
                 <TableDispositivos/>
-                <ToastContainer autoClose={5000}/>
             </DispositivosProvider>
+            <ToastContainer autoClose={5000} position="bottom-right" theme="colored" />
         </Container>
     )
 }
