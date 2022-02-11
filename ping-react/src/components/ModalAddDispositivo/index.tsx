@@ -1,17 +1,23 @@
-import { useState } from 'react';
 import { FormularioDisp, Modal, ModalOverlay, ModalOverlayActive } from './styles'
 import closeImg from '../../assets/svgs/close.svg'
 import { useDispositivos } from '../../hooks/useDispositivos';
-import { Dispositivo } from '../../types';
 
 const ModalAddDispositivo = (): JSX.Element => {
-    const { modalAddDispositivos, abreFechaModal, addDispositivo } = useDispositivos();
-    const [dispositivo, setDispositivo] = useState<Dispositivo>(Object);
+    const { dispositivoModal, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo } = useDispositivos();
+
+    const dispositivoModalInicial = {
+        id: 0,
+        nome: "",
+        ip: "",
+        tipoDispositivo: "Outros",
+        status: false,
+        mensagem: "",
+    }
 
     const handleSubmit = () => {
-        abreFechaModal(false);
+        setModalAddDispositivos(false);
 
-        addDispositivo(dispositivo);
+        // dispositivoModal.id > 0 ? 'editar' : addDispositivo(dispositivoModal);
     }
 
     return(
@@ -30,13 +36,22 @@ const ModalAddDispositivo = (): JSX.Element => {
                             >
                                 <div className="titulo">
                                     <h3>Preencha as informações do Dispositivo</h3>
-                                    <img src={closeImg} alt="Fechar" onClick={() => abreFechaModal(false)} />
+                                    <img src={closeImg} alt="Fechar" onClick={() => setModalAddDispositivos(false)} />
                                 </div>
 
-                                <input required type="text" placeholder="Nome do dispositivo" autoFocus onChange={(event) => setDispositivo({ ...dispositivo, nome: event.target.value })}/>
-                                <input required type="text" placeholder="IP do dispositivo" onChange={(event) => setDispositivo({ ...dispositivo, ip: event.target.value })} />
+                                <input required type="text" placeholder="Nome do dispositivo" autoFocus 
+                                    onChange={(event) => setDispositivoModal({ ...dispositivoModal, nome: event.target.value })}
+                                    value={dispositivoModal.nome} 
+                                />
+                                <input required type="text" placeholder="IP do dispositivo" 
+                                    onChange={(event) => setDispositivoModal({ ...dispositivoModal, ip: event.target.value })}
+                                    value={dispositivoModal.ip}
+                                />
                                 
-                                <select required onChange={(event) => setDispositivo({ ...dispositivo, tipoDispositivo: event.target.value })}>
+                                <select required 
+                                    onChange={(event) => setDispositivoModal({ ...dispositivoModal, tipoDispositivo: event.target.value })}
+                                    value={dispositivoModal.tipoDispositivo}
+                                >
                                     <option value="Outros" selected disabled >Selecione o tipo do dispositivo</option>
                                     <option value="Celular">Celular</option>
                                     <option value="Computador">Computador</option>
@@ -49,7 +64,7 @@ const ModalAddDispositivo = (): JSX.Element => {
 
                                 <div className="btn-group">
                                     <button className="btn-salvar" type="submit">Salvar</button>
-                                    <button className="btn-limpar">Limpar</button>
+                                    <button onClick={() => setDispositivoModal(dispositivoModalInicial)} className="btn-limpar" type="button">Limpar</button>
                                 </div>
                             </FormularioDisp>
                         </Modal>

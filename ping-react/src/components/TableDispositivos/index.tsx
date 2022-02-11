@@ -1,31 +1,41 @@
 import { useEffect } from 'react';
-import { ButtonAddDispositivo, Container, DispositivosContent } from './styles'
+import { useDispositivos } from '../../hooks/useDispositivos';
+
 import { SiAmazonalexa, SiAmazonfiretv } from 'react-icons/si';
 import { MdOutlinePhoneIphone, MdLightbulbOutline } from 'react-icons/md';
 import { RiRemoteControlLine } from 'react-icons/ri';
 import { HiOutlineDesktopComputer } from 'react-icons/hi';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import { useDispositivos } from '../../hooks/useDispositivos';
+import { CgArrowUpO } from 'react-icons/cg';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
+
+import { ButtonAddDispositivo, Container, DispositivosContent } from './styles'
 
 const TableDispositivos = (): JSX.Element => {
 
-    const { dispositivos, abreFechaModal, buscaStatusDispositivos } = useDispositivos();
+    const { dispositivos, setDispositivoModal , setModalAddDispositivos, buscaStatusDispositivos } = useDispositivos();
 
     useEffect(() => {
         buscaStatusDispositivos();
     }, [])
 
+
+    const atualizaDispositivo = (dispositivo: any) => {
+        setDispositivoModal(dispositivo);
+        setModalAddDispositivos(true);
+    }
+
     return(
         <Container>
             <ButtonAddDispositivo>
-                <button onClick={() => abreFechaModal(true)}>
+                <button onClick={() => setModalAddDispositivos(true)}>
                     Novo dispositivo <AiFillPlusCircle size="23px" color="white" />
                 </button>
             </ButtonAddDispositivo>
             <DispositivosContent>
                 {
                     dispositivos.map((dispositivo: any) => 
-                        <div key={dispositivo.id}  className={ dispositivo.status === true ? "disp-onlines" : "disp-offlines"}>
+                        <div key={dispositivo.id}  className={ dispositivo.status === true ? "disp-onlines" : "disp-offlines" }>
                             <li>
                                 {(() => {
                                         if (dispositivo.tipoDispositivo === 'Alexa') {
@@ -33,21 +43,44 @@ const TableDispositivos = (): JSX.Element => {
                                                 <>
                                                     <SiAmazonalexa size="35%" color="white" />
                                                     <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                    </div>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'Computador') {
                                             return (
                                                 <>
                                                     <HiOutlineDesktopComputer size="35%" color="white" /> 
-                                                
                                                     <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                    </div>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'Celular') {
                                             return (
                                                 <>
-                                                    <MdOutlinePhoneIphone size="35%" color="white" /> 
+                                                    <MdOutlinePhoneIphone size="35%" color="white" />
                                                     <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                    </div>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'Luz') {
@@ -55,6 +88,14 @@ const TableDispositivos = (): JSX.Element => {
                                                 <>
                                                     <MdLightbulbOutline size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                    </div>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'FireStickTv') {
@@ -62,6 +103,14 @@ const TableDispositivos = (): JSX.Element => {
                                                 <>
                                                     <SiAmazonfiretv size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                    </div>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'ControleSmart') {
@@ -69,6 +118,14 @@ const TableDispositivos = (): JSX.Element => {
                                                 <>
                                                     <RiRemoteControlLine size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                    </div>
                                                 </>
                                             )
                                         }

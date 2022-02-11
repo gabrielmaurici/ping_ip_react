@@ -10,11 +10,14 @@ interface DispositivosProviderProps {
 
 type dispositivo = Omit<Dispositivo, "ip">;
 type insereDispositivo = Omit<Dispositivo, "id status mensagem">
+type atualizaDispositivo = Omit<Dispositivo, "status mensagem">
 
 interface DispositivosContextData { 
-    dispositivos: dispositivo[];
+    dispositivos: Dispositivo[];
     modalAddDispositivos: boolean;
-    abreFechaModal: (seta: boolean) => void;
+    dispositivoModal: atualizaDispositivo;
+    setDispositivoModal: (atualiza: atualizaDispositivo) => void;
+    setModalAddDispositivos: (seta: boolean) => void;
     addDispositivo: (novoDispositivo: insereDispositivo) => Promise<void>;
     buscaStatusDispositivos: () => void;
 }
@@ -22,8 +25,9 @@ interface DispositivosContextData {
 const DispositivosContext = createContext<DispositivosContextData>({} as DispositivosContextData);
 
 export function DispositivosProvider({ children } : DispositivosProviderProps): JSX.Element {
-    const [dispositivos, setDispositivos] = useState<dispositivo[]>([]);
+    const [dispositivos, setDispositivos] = useState<Dispositivo[]>([]);
     const [modalAddDispositivos, setModalAddDispositivos] = useState(false);
+    const [dispositivoModal, setDispositivoModal] = useState<atualizaDispositivo>(Object);
 
     const capturaToken = async () => {
         try {
@@ -82,11 +86,11 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
             if(token) {
                 const tokenBearer = criaTokenBearer(token);
                 
-                toast.success('Atualizando status'); 
-                const statusDispositivos = await apiDispositivos.get<dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
+                const statusDispositivos = await apiDispositivos.get<Dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
                 setDispositivos(statusDispositivos.data);
-    
+                
                 if(statusDispositivos.data) {      
+                    toast.success('Atualizando status'); 
                     clearTimeout();          
                     setTimeout(buscaStatusDispositivos, 30000);
                 }
@@ -94,15 +98,11 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
         } catch (error: any) {
             toast.error("Aconteceu algum erro inesperado.");
         }
-    }    
-
-    const abreFechaModal = (seta: boolean) => {
-        setModalAddDispositivos(seta);
     }
 
     return (
         <DispositivosContext.Provider
-            value={{ dispositivos, modalAddDispositivos, abreFechaModal, addDispositivo, buscaStatusDispositivos }}
+            value={{ dispositivoModal, dispositivos, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo, buscaStatusDispositivos }}
         >
             {children}
         </DispositivosContext.Provider>

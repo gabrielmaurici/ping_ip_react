@@ -52,11 +52,55 @@ export const DispositivosContent = styled.div`
     gap: 0 10%;
         
     li { 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        height: 100%;
+        width: 100%;
+
         list-style-type: none;
+
+        gap:10px;
+
+        button {
+            height: 1.8rem;
+            width: 100%;
+            
+            padding: 2px;
+            
+            border-radius: 5px;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+        
+
+        .btn {
+            display: flex;
+            
+            width: 90%;
+            
+            gap:8px;
+        }
+
+        .btn-editar {
+            background: #A971FF;
+            border: 1px solid #A971FF;
+        }
+        
+        .btn-deletar {
+            background: #E8723B;
+            border: 1px solid #E8723B;
+
+        }
     }
-    
+
     .disp-onlines, .disp-offlines {
         display: flex;
+        flex-direction: c
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -64,7 +108,7 @@ export const DispositivosContent = styled.div`
         height: 30%;
         width: 17%;
 
-        padding: 5px;
+        padding: 0 3px 0;
 
         border-radius: 5px;
 
@@ -84,4 +128,5 @@ export const DispositivosContent = styled.div`
     .disp-offlines {
         border: 1px solid #eb3728;
     }
+    
 `;
