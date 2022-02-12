@@ -8,7 +8,6 @@ interface DispositivosProviderProps {
     children: ReactNode;
 }
 
-type dispositivo = Omit<Dispositivo, "ip">;
 type insereDispositivo = Omit<Dispositivo, "id status mensagem">
 type atualizaDispositivo = Omit<Dispositivo, "status mensagem">
 
@@ -19,6 +18,7 @@ interface DispositivosContextData {
     setDispositivoModal: (atualiza: atualizaDispositivo) => void;
     setModalAddDispositivos: (seta: boolean) => void;
     addDispositivo: (novoDispositivo: insereDispositivo) => Promise<void>;
+    atualizaDispositivo: (dispositivoAtualizado: atualizaDispositivo) => Promise<void>;
     buscaStatusDispositivos: () => void;
 }
 
@@ -66,12 +66,32 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
             if(token) {
                 const tokenBearer = criaTokenBearer(token);
     
-                const retornoDispositivo = await apiDispositivos.post<dispositivo>('InserirDispositivo', novoDispositivo, tokenBearer);
+                const retornoDispositivo = await apiDispositivos.post<insereDispositivo>('InserirDispositivo', novoDispositivo, tokenBearer);
     
                 if(retornoDispositivo.status === 409){
                     toast.warning(retornoDispositivo.data.mensagem);
                 } else{
                     toast.success(retornoDispositivo.data.mensagem);
+                }
+            }
+        } catch (error: any) {
+            toast.error("Aconteceu algum erro inesperado.");
+        }
+    }
+
+    const atualizaDispositivo = async (dispositivoAtualizado: atualizaDispositivo) => {
+        try {
+            const token = await capturaToken();
+
+            if(token) {
+                const tokenBearer = criaTokenBearer(token);
+    
+                const retornoDispositivo = await apiDispositivos.put('AtualizarDispositivo', dispositivoAtualizado, tokenBearer);
+
+                if(retornoDispositivo.status === 409){
+                    toast.warning(retornoDispositivo.data);
+                } else{
+                    toast.success(retornoDispositivo.data);
                 }
             }
         } catch (error: any) {
@@ -102,7 +122,7 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
 
     return (
         <DispositivosContext.Provider
-            value={{ dispositivoModal, dispositivos, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo, buscaStatusDispositivos }}
+            value={{ dispositivoModal, dispositivos, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo, atualizaDispositivo, buscaStatusDispositivos }}
         >
             {children}
         </DispositivosContext.Provider>

@@ -3,7 +3,7 @@ import closeImg from '../../assets/svgs/close.svg'
 import { useDispositivos } from '../../hooks/useDispositivos';
 
 const ModalAddDispositivo = (): JSX.Element => {
-    const { dispositivoModal, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo } = useDispositivos();
+    const { dispositivoModal, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo, atualizaDispositivo } = useDispositivos();
 
     const dispositivoModalInicial = {
         id: 0,
@@ -16,8 +16,16 @@ const ModalAddDispositivo = (): JSX.Element => {
 
     const handleSubmit = () => {
         setModalAddDispositivos(false);
+        console.log(dispositivoModal);
+        
+        dispositivoModal.id > 0 ? atualizaDispositivo(dispositivoModal) : addDispositivo(dispositivoModal);
+        setDispositivoModal(dispositivoModalInicial);
+    }
 
-        // dispositivoModal.id > 0 ? 'editar' : addDispositivo(dispositivoModal);
+
+    const fechaModal = () => {
+        setDispositivoModal(dispositivoModalInicial);
+        setModalAddDispositivos(false);
     }
 
     return(
@@ -36,7 +44,7 @@ const ModalAddDispositivo = (): JSX.Element => {
                             >
                                 <div className="titulo">
                                     <h3>Preencha as informações do Dispositivo</h3>
-                                    <img src={closeImg} alt="Fechar" onClick={() => setModalAddDispositivos(false)} />
+                                    <img src={closeImg} alt="Fechar" onClick={() => fechaModal()} />
                                 </div>
 
                                 <input required type="text" placeholder="Nome do dispositivo" autoFocus 
