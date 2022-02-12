@@ -20,6 +20,7 @@ interface DispositivosContextData {
     addDispositivo: (novoDispositivo: insereDispositivo) => Promise<void>;
     atualizaDispositivo: (dispositivoAtualizado: atualizaDispositivo) => Promise<void>;
     buscaStatusDispositivos: () => void;
+    deletaDispositivo: (id: number) => Promise<void>;
 }
 
 const DispositivosContext = createContext<DispositivosContextData>({} as DispositivosContextData);
@@ -72,6 +73,7 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
                     toast.warning(retornoDispositivo.data.mensagem);
                 } else{
                     toast.success(retornoDispositivo.data.mensagem);
+                    buscaStatusDispositivos();
                 }
             }
         } catch (error: any) {
@@ -92,6 +94,28 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
                     toast.warning(retornoDispositivo.data);
                 } else{
                     toast.success(retornoDispositivo.data);
+                    buscaStatusDispositivos();
+                }
+            }
+        } catch (error: any) {
+            toast.error("Aconteceu algum erro inesperado.");
+        }
+    }
+    
+    const deletaDispositivo = async (id: number) => {
+        try {
+            const token = await capturaToken();
+
+            if(token) {
+                const tokenBearer = criaTokenBearer(token);
+    
+                const retornoDispositivo = await apiDispositivos.delete(`DeletarDispositivo/${id}`, tokenBearer);
+    
+                if(retornoDispositivo.status === 409){
+                    toast.warning(retornoDispositivo.data);
+                } else{
+                    toast.success(retornoDispositivo.data);
+                    buscaStatusDispositivos();
                 }
             }
         } catch (error: any) {
@@ -108,11 +132,15 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
                 
                 const statusDispositivos = await apiDispositivos.get<Dispositivo[]>('/ObterStatusDispositivos', tokenBearer);
                 setDispositivos(statusDispositivos.data);
+                toast.success('Atualizando status'); 
                 
-                if(statusDispositivos.data) {      
-                    toast.success('Atualizando status'); 
-                    clearTimeout();          
-                    setTimeout(buscaStatusDispositivos, 30000);
+                if(statusDispositivos.status === 409) {
+                    toast.warning(statusDispositivos.data);
+                } else {
+                    if(statusDispositivos.data) {      
+                        clearTimeout();          
+                        setTimeout(buscaStatusDispositivos, 30000);
+                    }
                 }
             }
         } catch (error: any) {
@@ -122,7 +150,10 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
 
     return (
         <DispositivosContext.Provider
-            value={{ dispositivoModal, dispositivos, modalAddDispositivos, setDispositivoModal, setModalAddDispositivos, addDispositivo, atualizaDispositivo, buscaStatusDispositivos }}
+            value={{ dispositivoModal, dispositivos, modalAddDispositivos, setDispositivoModal,
+                setModalAddDispositivos, addDispositivo, atualizaDispositivo, buscaStatusDispositivos, 
+                deletaDispositivo 
+            }}
         >
             {children}
         </DispositivosContext.Provider>

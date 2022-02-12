@@ -4,21 +4,22 @@ import { useDispositivos } from '../../hooks/useDispositivos';
 import { SiAmazonalexa, SiAmazonfiretv } from 'react-icons/si';
 import { MdOutlinePhoneIphone, MdLightbulbOutline } from 'react-icons/md';
 import { RiRemoteControlLine } from 'react-icons/ri';
-import { HiOutlineDesktopComputer } from 'react-icons/hi';
+import { GoDeviceDesktop } from 'react-icons/go';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { CgArrowUpO } from 'react-icons/cg';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { BsPlug } from 'react-icons/bs';
+import { MdOutlineDevicesOther } from 'react-icons/md';
 
 import { ButtonAddDispositivo, Container, DispositivosContent } from './styles'
 
 const TableDispositivos = (): JSX.Element => {
 
-    const { dispositivos, setDispositivoModal , setModalAddDispositivos, buscaStatusDispositivos } = useDispositivos();
+    const { dispositivos, setDispositivoModal , setModalAddDispositivos, buscaStatusDispositivos, deletaDispositivo } = useDispositivos();
 
     useEffect(() => {
         buscaStatusDispositivos();
     }, [])
-
 
     const atualizaDispositivo = (dispositivo: any) => {
         setDispositivoModal(dispositivo);
@@ -49,14 +50,18 @@ const TableDispositivos = (): JSX.Element => {
                                                         >
                                                             <CgArrowUpO size="100%" color="white" />
                                                         </button>
-                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
                                                     </div>
                                                 </>
                                             )
                                         } else if (dispositivo.tipoDispositivo === 'Computador') {
                                             return (
                                                 <>
-                                                    <HiOutlineDesktopComputer size="35%" color="white" /> 
+                                                    <GoDeviceDesktop size="35%" color="white" /> 
                                                     <p>{dispositivo.nome}</p>
                                                     <div className="btn">
                                                         <button className="btn-editar" 
@@ -64,7 +69,11 @@ const TableDispositivos = (): JSX.Element => {
                                                         >
                                                             <CgArrowUpO size="100%" color="white" />
                                                         </button>
-                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
                                                     </div>
                                                 </>
                                             )
@@ -79,7 +88,11 @@ const TableDispositivos = (): JSX.Element => {
                                                         >
                                                             <CgArrowUpO size="100%" color="white" />
                                                         </button>
-                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
                                                     </div>
                                                 </>
                                             )
@@ -94,7 +107,11 @@ const TableDispositivos = (): JSX.Element => {
                                                         >
                                                             <CgArrowUpO size="100%" color="white" />
                                                         </button>
-                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
                                                     </div>
                                                 </>
                                             )
@@ -109,7 +126,11 @@ const TableDispositivos = (): JSX.Element => {
                                                         >
                                                             <CgArrowUpO size="100%" color="white" />
                                                         </button>
-                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
                                                     </div>
                                                 </>
                                             )
@@ -124,7 +145,49 @@ const TableDispositivos = (): JSX.Element => {
                                                         >
                                                             <CgArrowUpO size="100%" color="white" />
                                                         </button>
-                                                        <button className="btn-deletar"><MdOutlineDeleteOutline size="100%" color="white" /></button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            )
+                                        } else if (dispositivo.tipoDispositivo === 'Outros') {
+                                            return (
+                                                <>
+                                                    <MdOutlineDevicesOther size="35%" color="white" /> 
+                                                    <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            )
+                                        } else if (dispositivo.tipoDispositivo === 'Tomada') {
+                                            return (
+                                                <>
+                                                    <BsPlug size="35%" color="white" /> 
+                                                    <p>{dispositivo.nome}</p>
+                                                    <div className="btn">
+                                                        <button className="btn-editar" 
+                                                            onClick={() => atualizaDispositivo(dispositivo)}
+                                                        >
+                                                            <CgArrowUpO size="100%" color="white" />
+                                                        </button>
+                                                        <button className="btn-deletar"
+                                                            onClick={() => deletaDispositivo(dispositivo.id)}
+                                                        >
+                                                            <MdOutlineDeleteOutline size="100%" color="white" />
+                                                        </button>
                                                     </div>
                                                 </>
                                             )

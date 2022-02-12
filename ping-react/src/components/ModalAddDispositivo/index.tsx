@@ -16,12 +16,10 @@ const ModalAddDispositivo = (): JSX.Element => {
 
     const handleSubmit = () => {
         setModalAddDispositivos(false);
-        console.log(dispositivoModal);
         
         dispositivoModal.id > 0 ? atualizaDispositivo(dispositivoModal) : addDispositivo(dispositivoModal);
         setDispositivoModal(dispositivoModalInicial);
     }
-
 
     const fechaModal = () => {
         setDispositivoModal(dispositivoModalInicial);
@@ -67,6 +65,7 @@ const ModalAddDispositivo = (): JSX.Element => {
                                     <option value="FireStickTv">Fire Stick Tv</option>
                                     <option value="ControleSmart">Controle Universal</option>
                                     <option value="Luz">Luz</option>
+                                    <option value="Tomada">Tomada</option>
                                     <option value="Outros">Outros</option>
                                 </select>
 
