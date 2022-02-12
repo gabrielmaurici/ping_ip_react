@@ -67,12 +67,13 @@ export function DispositivosProvider({ children } : DispositivosProviderProps): 
             if(token) {
                 const tokenBearer = criaTokenBearer(token);
     
-                const retornoDispositivo = await apiDispositivos.post<insereDispositivo>('InserirDispositivo', novoDispositivo, tokenBearer);
-    
+                const retornoDispositivo = await apiDispositivos.post('InserirDispositivo', novoDispositivo, tokenBearer);
+
                 if(retornoDispositivo.status === 409){
-                    toast.warning(retornoDispositivo.data.mensagem);
+                    console.log(retornoDispositivo.data)
+                    toast.warning(retornoDispositivo.data);
                 } else{
-                    toast.success(retornoDispositivo.data.mensagem);
+                    toast.success(retornoDispositivo.data);
                     buscaStatusDispositivos();
                 }
             }

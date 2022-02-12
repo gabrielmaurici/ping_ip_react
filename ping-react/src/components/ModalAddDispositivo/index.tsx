@@ -9,7 +9,7 @@ const ModalAddDispositivo = (): JSX.Element => {
         id: 0,
         nome: "",
         ip: "",
-        tipoDispositivo: "Outros",
+        tipoDispositivo: "Selecione o tipo do dispositivo",
         status: false,
         mensagem: "",
     }
@@ -58,7 +58,7 @@ const ModalAddDispositivo = (): JSX.Element => {
                                     onChange={(event) => setDispositivoModal({ ...dispositivoModal, tipoDispositivo: event.target.value })}
                                     value={dispositivoModal.tipoDispositivo}
                                 >
-                                    <option value="Outros" selected disabled >Selecione o tipo do dispositivo</option>
+                                    <option selected disabled >Selecione o tipo do dispositivo</option>
                                     <option value="Celular">Celular</option>
                                     <option value="Computador">Computador</option>
                                     <option value="Alexa">Alexa</option>
