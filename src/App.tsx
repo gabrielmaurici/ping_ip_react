@@ -1,4 +1,3 @@
-import { DispositivosProvider } from './hooks/useDispositivos';
 import Home from '../src/pages/Home'
 import GlobalStyles from './styles/global';
 

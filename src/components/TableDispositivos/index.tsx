@@ -19,7 +19,7 @@ const TableDispositivos = (): JSX.Element => {
 
     useEffect(() => {
         buscaStatusDispositivos();
-    }, [])
+    })
 
     const atualizaDispositivo = (dispositivo: any) => {
         setDispositivoModal(dispositivo);
